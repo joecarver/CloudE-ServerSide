@@ -7,4 +7,4 @@ class AppUser(models.Model):
 
 class Project(models.Model):
     title = models.TextField(blank=False)
-    admin = models.ForeignKey(User)
+    admin = models.ForeignKey(AppUser)
