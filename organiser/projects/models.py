@@ -14,8 +14,4 @@ class Project(models.Model):
 
     def __unicode__(self):
         return self.title + ' by: ' + self.admin.username
-
-class ProjectAssignee(models.Model):
-	proj = models.ForeignKey(Project)
-	assignee = models.ForeignKey(AppUser)
     
