@@ -1,9 +1,14 @@
 # webapp/app.yaml
-application: organiser
+application: cloude-serverside
 version: 1
 runtime: python27
 api_version: 1
+threadsafe: true
 
 handlers:
 - url: .*
-  script: main.app
+  script: organiser.wsgi.application
+
+libraries:
+- name: django
+  version: 1.8.5
