@@ -78,8 +78,11 @@ WSGI_APPLICATION = 'organiser.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': '2001:4860:4864:1:8b79:8f89:f0b5:1bf8',
+        'NAME': 'brain',
+        'USER': 'django',
+        'PASSWORD': 'tssmjdv2015',
     }
 }
 
