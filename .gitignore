@@ -1,2 +1,8 @@
+#Compiled python files
 *.pyc
+
+#BS MAC CRAP YOU MAC USERS!
 .DS_Store
+
+#Windows link files
+*.lnk
