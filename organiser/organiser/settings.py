@@ -71,23 +71,32 @@ TEMPLATES = [
 WSGI_APPLICATION = 'organiser.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST': '2001:4860:4864:1:8b79:8f89:f0b5:1bf8',
-        'NAME': 'brain',
-        'USER': 'django',
-        'PASSWORD': 'tssmjdv2015',
+if os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine'):
+    # Running on production App Engine, so use a Google Cloud SQL database.
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'HOST': '/cloudsql/cloude-restfulservice:mozak',
+            'NAME': 'brain',
+        	'USER': 'clouddjango',
+      	  	'PASSWORD': 'tssmjdv2015',
+        }
     }
-}
-
+else:
+    # Running in development, but want to access the Google Cloud SQL instance
+    # in production.
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'HOST': '2001:4860:4864:1:8b79:8f89:f0b5:1bf8',
+	        'NAME': 'brain',
+        	'USER': 'django',
+        	'PASSWORD': 'tssmjdv2015',
+        }
+    }
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
