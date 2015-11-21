@@ -1,6 +1,7 @@
 from django.db import models
 
-
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 
 # Create your models here.
 
@@ -38,7 +39,7 @@ class Task(models.Model):
 	summary = models.TextField(blank=False)
 	description = models.TextField()
 	proj = models.ForeignKey(Project)
-	column = models.ForeignKey(Column, default='doric')
+	column = models.ForeignKey(Column)
 
 	def __unicode__(self):
 		return self.summary #maybe add some more info
