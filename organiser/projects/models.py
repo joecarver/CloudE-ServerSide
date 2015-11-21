@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.signals import post_save
 
 # Create your models here.
 
@@ -16,6 +17,12 @@ class Project(models.Model):
     def __unicode__(self):
         return self.title + ' admin by: ' + self.admin.username
 
+
+def get_project_dependencies(sender, instance, **kwargs):
+     #instance.product.stock -= instance.amount
+     if kwargs.get('created', False):
+		ProjectAssignee(proj=instance, assignee=instance.admin).save()
+post_save.connect(get_project_dependencies, sender=Project, dispatch_uid="smth_sensible")
   
 class ProjectAssignee(models.Model):
 	proj = models.ForeignKey(Project)
