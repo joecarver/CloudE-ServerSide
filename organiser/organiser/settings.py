@@ -76,7 +76,7 @@ if os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine'):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'HOST': '/cloudsql/cloude-restfulservice:mozak',
+            'HOST': '/cloudsql/cloude-restfulservice:something',
             'NAME': 'brain',
         	'USER': 'clouddjango',
       	  	'PASSWORD': 'tssmjdv2015',
@@ -88,7 +88,7 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'HOST': '2001:4860:4864:1:8b79:8f89:f0b5:1bf8',
+            'HOST': '2001:4860:4864:1:2b8:314d:d105:4e4d',
 	        'NAME': 'brain',
         	'USER': 'django',
         	'PASSWORD': 'tssmjdv2015',
