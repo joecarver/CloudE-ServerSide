@@ -25,10 +25,24 @@ class AppUserSerializer(serializers.ModelSerializer):
  		model = AppUser
  		fields = ('id','username','avatar','projects')
 
-class ProjectSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Project
-        fields = ('title', 'admin')
+class ProjectListSerializer(serializers.ModelSerializer):
+	assignees = serializers.SerializerMethodField('dank')
+	def dank(self, project):
+		assignees = []
+		projAssResults = ProjectAssignee.objects.filter(proj=project.id)
+		for projAss in projAssResults:
+			tempResults = AppUser.objects.filter(id=projAss.assignee.id)
+			print tempResults
+			for result in tempResults:
+				tempUser = {}
+				tempUser["id"] = result.id
+				tempUser["username"] = result.username
+				tempUser["avatar"] = result.avatar
+				assignees.append(tempUser)
+		return assignees
+	class Meta:
+		model = Project
+		fields = ('title', 'admin', 'assignees')
 
 class ProjectAssigneeSerializer(serializers.ModelSerializer):
 	class Meta:
