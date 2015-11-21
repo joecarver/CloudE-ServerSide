@@ -1,14 +1,14 @@
 from rest_framework import generics
 import itertools
 from projects.models import AppUser, Project, ProjectAssignee, Task, TaskAssignee, TaskRequiredSkill, Notification, Column
-from projects.serializers import AppUserSerializer, ProjectListSerializer, ProjectAssigneeSerializer, TaskSerializer, TaskAssigneeSerializer, TaskRequiredSkillSerializer, NotificationSerializer, ColumnSerializer, AppUserListSerializer
+from projects.serializers import AppUserSerializer, TaskSerializer, TaskAssigneeSerializer, TaskRequiredSkillSerializer, NotificationSerializer, ColumnSerializer, ProjectSerializer
 
 
 # Create your views here.
 
 class AppUserList(generics.ListCreateAPIView):
     queryset = AppUser.objects.all()
-    serializer_class = AppUserListSerializer
+    serializer_class = AppUserSerializer
 
 class AppUser(generics.RetrieveUpdateDestroyAPIView):
 	queryset = AppUser.objects.all()
@@ -16,16 +16,12 @@ class AppUser(generics.RetrieveUpdateDestroyAPIView):
 
 class ProjectList(generics.ListCreateAPIView):
     queryset = Project.objects.all()
-    serializer_class = ProjectListSerializer
+    serializer_class = ProjectSerializer
 
 #shows all assignees for specified project, allows adding new assignees
-class ProjectDetail(generics.ListCreateAPIView):
-	serializer_class = ProjectAssigneeSerializer
-
-	def get_queryset(self):
-		projID = self.kwargs['pk']
-		return ProjectAssignee.objects.filter(proj=projID)
-
+class Project(generics.RetrieveUpdateDestroyAPIView):
+	queryset = Project.objects.all()
+	serializer_class = ProjectSerializer
 
 class TaskList(generics.ListCreateAPIView):
 	queryset = Task.objects.all()
