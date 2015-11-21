@@ -1,0 +1,17 @@
+# webapp/app.yaml
+application: cloude-restfulservice
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+- url: .*
+  script: organiser.wsgi.application
+
+libraries:
+- name: django
+  version: 1.5
+
+- name: MySQLdb
+  version: "latest"
