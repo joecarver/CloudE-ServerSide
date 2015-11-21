@@ -1,14 +1,18 @@
 from rest_framework import generics
 import itertools
 from projects.models import AppUser, Project, ProjectAssignee, Task, TaskAssignee, TaskRequiredSkill, Notification, Column
-from projects.serializers import AppUserSerializer, ProjectSerializer, ProjectAssigneeSerializer, TaskSerializer, TaskAssigneeSerializer, TaskRequiredSkillSerializer, NotificationSerializer, ColumnSerializer
+from projects.serializers import AppUserSerializer, ProjectSerializer, ProjectAssigneeSerializer, TaskSerializer, TaskAssigneeSerializer, TaskRequiredSkillSerializer, NotificationSerializer, ColumnSerializer, AppUserListSerializer
 
 
 # Create your views here.
 
 class AppUserList(generics.ListCreateAPIView):
     queryset = AppUser.objects.all()
-    serializer_class = AppUserSerializer
+    serializer_class = AppUserListSerializer
+
+class AppUser(generics.RetrieveUpdateDestroyAPIView):
+	queryset = AppUser.objects.all()
+	serializer_class = AppUserSerializer
 
 class ProjectList(generics.ListCreateAPIView):
     queryset = Project.objects.all()

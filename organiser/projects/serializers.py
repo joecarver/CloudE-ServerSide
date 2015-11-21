@@ -1,6 +1,18 @@
 from rest_framework import serializers
 from projects.models import AppUser, Project, ProjectAssignee, Task, TaskAssignee, TaskRequiredSkill, Notification, Column
 
+class AppUserListSerializer(serializers.ModelSerializer):
+	projects = serializers.SerializerMethodField('dank')
+	def dank(self, appuser):
+		results = ProjectAssignee.objects.filter(assignee=appuser.id)
+		resultIds = []
+		for result in results:
+			resultIds.append(result.id)
+ 		return resultIds
+ 	class Meta:
+ 		model = AppUser
+ 		fields = ('id','username','avatar','projects')
+
 class AppUserSerializer(serializers.ModelSerializer):
 	projects = serializers.SerializerMethodField('dank')
 	def dank(self, appuser):
