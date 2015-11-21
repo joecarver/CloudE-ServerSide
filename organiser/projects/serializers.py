@@ -4,7 +4,7 @@ from projects.models import AppUser, Project, ProjectAssignee, Task, TaskAssigne
 class AppUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = AppUser
-        fields = ('username',)
+        fields = ('username','avatar')
 
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
