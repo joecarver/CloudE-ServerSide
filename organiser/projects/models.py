@@ -4,7 +4,6 @@ from django.db import models
 
 class AppUser(models.Model):
     username = models.CharField(blank=False, max_length=254)
-    avatar = models.CharField(default='JamesCameron', max_length=254)
 
     def __unicode__(self):
         return self.username
