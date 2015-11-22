@@ -59,7 +59,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 		return projectDetails
 	class Meta:
 		model = Project
-		fields = ('title', 'admin', 'details')
+		fields = ('id','title', 'admin', 'details')
 
 class TaskSerializer(serializers.ModelSerializer):
 
@@ -73,7 +73,7 @@ class TaskSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = Task
-		fields = ('summary', 'description', 'proj', 'column')
+		fields = ('id','summary', 'description', 'proj', 'column')
 
 class TaskRequiredSkillSerializer(serializers.ModelSerializer):
 	class Meta:
@@ -93,4 +93,4 @@ class NotificationSerializer(serializers.ModelSerializer):
 class ColumnSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Column
-		fields = ('name', 'proj')
+		fields = ('id','name', 'proj')
