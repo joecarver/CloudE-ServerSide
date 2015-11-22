@@ -63,14 +63,6 @@ class ProjectSerializer(serializers.ModelSerializer):
 
 class TaskSerializer(serializers.ModelSerializer):
 
-	#Now when deserializing data, we can call .save() to return an object instance, based on the validated data.
-	#Calling .save() will either create a new instance, or update an existing instance, depending on if an existing instance was passed when instantiating the serializer class
-	def update(self, instance, validated_data):
-		instance.summary = validated_data.get('summary', instance.summary)
-		instance.description = validated_data.get('description', instance.summary)
-		instance.proj = validated_data.get('proj', instance.summary)
-		instance.column = validated_data.get('column', instance.summary)
-
 	class Meta:
 		model = Task
 		fields = ('id','summary', 'description', 'proj', 'column')
