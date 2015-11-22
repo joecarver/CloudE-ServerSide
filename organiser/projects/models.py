@@ -4,7 +4,7 @@ from django.db.models.signals import post_save
 # Create your models here.
 
 class AppUser(models.Model):
-    username = models.CharField(blank=False, max_length=254)
+    username = models.CharField(blank=False, max_length=254, unique=True)
     avatar = models.CharField(default='JamesCameron', max_length=254)
 
 class Project(models.Model):
