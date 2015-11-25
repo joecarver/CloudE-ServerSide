@@ -13,3 +13,4 @@ organiser/organiser/settings.py
 
 #Local database
 organiser/db.sqlite3
+*.pyc

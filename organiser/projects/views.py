@@ -44,8 +44,6 @@ class TaskAssignees(generics.ListCreateAPIView):
 	def get_queryset(self):
 		taskID = self.kwargs['pk']
 		return TaskAssignee.objects.filter(tsk=taskID)
-		
-
 
 class TaskSkills(generics.RetrieveUpdateDestroyAPIView):
 	queryset = TaskRequiredSkill.objects.all()
