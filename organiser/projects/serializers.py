@@ -65,7 +65,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 class TaskSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Task
-		fields = ('id','summary', 'description', 'proj', 'column', 'columnPos', 'dueDate')
+		fields = ('id','summary', 'description', 'proj', 'column', 'posInColumn', 'dueDate')
 
 
 class TaskRequiredSkillSerializer(serializers.ModelSerializer):
