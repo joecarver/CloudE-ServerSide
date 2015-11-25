@@ -42,7 +42,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 			tempCol["proj"] = projCol.proj.id
 			columns.append(tempCol)
 
-			tempTasks =  Task.objects.filter(proj=projCol.proj, column= projCol.id)
+			tempTasks =  Task.objects.filter(proj=projCol.proj, column=projCol.id)
 			for task in tempTasks:
 				tempTask = {}
 				tempTask["id"] = task.id
@@ -50,6 +50,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 				tempTask["description"] = task.description
 				tempTask["proj"] = task.proj.id
 				tempTask["column"] = task.column.id
+				tempTask["columnPos"] = task.columnPos
 				tasks.append(tempTask)
 
 		projectDetails["assignees"] = assignees
@@ -62,10 +63,10 @@ class ProjectSerializer(serializers.ModelSerializer):
 		fields = ('id','title', 'admin', 'details')
 
 class TaskSerializer(serializers.ModelSerializer):
-
 	class Meta:
 		model = Task
-		fields = ('id','summary', 'description', 'proj', 'column', 'dueDate')
+		fields = ('id','summary', 'description', 'proj', 'column', 'columnPos', 'dueDate')
+
 
 class TaskRequiredSkillSerializer(serializers.ModelSerializer):
 	class Meta:

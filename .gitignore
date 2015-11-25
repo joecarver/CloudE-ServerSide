@@ -1,5 +1,6 @@
 #Compiled python files
 *.pyc
+.pyc
 
 #BS MAC CRAP YOU MAC USERS!
 .DS_Store
@@ -9,3 +10,6 @@
 
 #Ignore local settings
 organiser/organiser/settings.py
+
+#Local database
+organiser/db.sqlite3
