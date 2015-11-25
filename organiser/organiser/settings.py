@@ -88,13 +88,11 @@ else:
     # in production.
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'HOST': '2001:4860:4864:1:2b8:314d:d105:4e4d',
-	        'NAME': 'brain',
-        	'USER': 'django',
-        	'PASSWORD': 'tssmjdv2015',
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
+
 
 
 # Internationalization
