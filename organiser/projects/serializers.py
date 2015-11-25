@@ -65,7 +65,7 @@ class TaskSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = Task
-		fields = ('id','summary', 'description', 'proj', 'column')
+		fields = ('id','summary', 'description', 'proj', 'column', 'dueDate')
 
 class TaskRequiredSkillSerializer(serializers.ModelSerializer):
 	class Meta:

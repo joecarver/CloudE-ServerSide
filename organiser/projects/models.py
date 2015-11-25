@@ -41,6 +41,7 @@ class Task(models.Model):
 	description = models.TextField()
 	proj = models.ForeignKey(Project)
 	column = models.ForeignKey(Column)
+	dueDate = models.DateTimeField()
 
 	def __unicode__(self):
 		return self.summary #maybe add some more info
