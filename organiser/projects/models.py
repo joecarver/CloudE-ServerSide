@@ -41,7 +41,11 @@ class Task(models.Model):
 	description = models.TextField()
 	proj = models.ForeignKey(Project)
 	column = models.ForeignKey(Column)
+	columnPos = models.IntegerField(blank=False)
+	dueDate = models.DateTimeField(blank=False)
 
+	class Meta:
+		unique_together = ['column', 'columnPos']
 	def __unicode__(self):
 		return self.summary #maybe add some more info
 
