@@ -6,3 +6,9 @@
 
 #Windows link files
 *.lnk
+
+#Ignore local settings
+organiser/organiser/settings.py
+
+#Local database
+organiser/db.sqlite3
