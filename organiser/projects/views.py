@@ -2,9 +2,7 @@ from rest_framework import generics
 import itertools
 from projects.models import AppUser, Project, ProjectAssignee, Task, TaskAssignee, TaskRequiredSkill, Notification, Column
 from projects.serializers import AppUserSerializer, TaskSerializer, TaskAssigneeSerializer, TaskRequiredSkillSerializer, NotificationSerializer, ColumnSerializer, ProjectSerializer
-
-
-# Create your views here.
+from django.contrib.auth import get_user_model
 
 class AppUserList(generics.ListCreateAPIView):
     queryset = AppUser.objects.all()
@@ -13,6 +11,14 @@ class AppUserList(generics.ListCreateAPIView):
 class AppUser(generics.RetrieveUpdateDestroyAPIView):
 	queryset = AppUser.objects.all()
 	serializer_class = AppUserSerializer
+
+#TODO - FIX - 'AppUser has no attribute 'objects''
+class AppUserByName(generics.RetrieveUpdateDestroyAPIView):
+	serializer_class = AppUserSerializer
+
+	def get_queryset(self):
+		uName = self.kwargs['username']
+		return AppUser.objects.get(uName)
 
 class ProjectList(generics.ListCreateAPIView):
     queryset = Project.objects.all()
@@ -29,13 +35,19 @@ class TaskList(generics.ListCreateAPIView):
 
 #Need to be able to serialize multiple model classes,
 # so this view can manage both assignees to a task, and skills required by task
-class TaskDetail(generics.ListCreateAPIView):
+class TaskDetail(generics.RetrieveUpdateDestroyAPIView):
+	queryset = Task.objects.all()
+	serializer_class = TaskSerializer
+
+		
+class TaskSkills(generics.RetrieveUpdateDestroyAPIView):
+	queryset = Task.objects.all()
+	serializer_class = TaskRequiredSkillSerializer
+
+class TaskAssignees(generics.RetrieveUpdateDestroyAPIView):
+	queryset = Task.objects.all()
 	serializer_class = TaskAssigneeSerializer
 
-	def get_queryset(self):
-		tskID = self.kwargs['pk']
-		return TaskAssignee.objects.filter(tsk=tskID)
-		
 class NotificationView(generics.RetrieveUpdateDestroyAPIView):
 	serializer_class = NotificationSerializer
 
