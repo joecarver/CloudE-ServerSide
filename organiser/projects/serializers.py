@@ -11,7 +11,7 @@ class AppUserSerializer(serializers.ModelSerializer):
  		return resultIds
  	class Meta:
  		model = AppUser
- 		fields = ('id','username','avatar','projects')
+ 		fields = ('id', 'date', 'username','avatar','projects')
 
 class ProjectSerializer(serializers.ModelSerializer):
 	details = serializers.SerializerMethodField('dank')
@@ -20,6 +20,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 		projectDetails = {}
 
 		assignees = []
+		taskAssignees = []
 		columns = []
 		tasks = []
 
@@ -31,6 +32,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 			for result in tempResults:
 				tempUser = {}
 				tempUser["id"] = result.id
+				tempUser["date"] = projAss.date # this sets the date to when the user was assigned the project
 				tempUser["username"] = result.username
 				tempUser["avatar"] = result.avatar
 				assignees.append(tempUser)
@@ -38,6 +40,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 		for projCol in projColResults:
 			tempCol = {}
 			tempCol["id"] = projCol.id
+			tempCol["date"] = projCol.date
 			tempCol["name"] = projCol.name
 			tempCol["proj"] = projCol.proj.id
 			columns.append(tempCol)
@@ -46,21 +49,33 @@ class ProjectSerializer(serializers.ModelSerializer):
 			for task in tempTasks:
 				tempTask = {}
 				tempTask["id"] = task.id
+				tempTask["date"] = task.date
 				tempTask["summary"] = task.summary
 				tempTask["description"] = task.description
 				tempTask["proj"] = task.proj.id
 				tempTask["column"] = task.column.id
 				tempTask["posInColumn"] = task.posInColumn
+
+				tempTaskAsses = TaskAssignee.objects.filter(tsk=task)
+				# maybe a check here like taskAsses <= projAsses
+				for taskAss in tempTaskAsses:
+					tempTaskAss = {}
+					tempTaskAss["id"] = taskAss.id
+					tempTaskAss["date"] = taskAss.date
+					tempTaskAss["task"] = taskAss.tsk
+					tempTaskAss["assignee"] = taskAss.assignee
+					taskAssignees.append(tempTaskAss)
+
+				tempTask["assignees"] = taskAssignees
 				tasks.append(tempTask)
 
 		projectDetails["assignees"] = assignees
 		projectDetails["columns"] = columns
-		projectDetails["tasks"] = tasks
-
+		projectDetails["tasks"] = tasks		
 		return projectDetails
 	class Meta:
 		model = Project
-		fields = ('id','title', 'admin', 'details')
+		fields = ('id', 'title', 'admin', 'details')
 
 class ProjectAssigneeSerializer(serializers.ModelSerializer):
 	class Meta:
@@ -70,7 +85,7 @@ class ProjectAssigneeSerializer(serializers.ModelSerializer):
 class TaskSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Task
-		fields = ('id','summary', 'description', 'proj', 'column', 'posInColumn')#, 'dueDate')
+		fields = ('id', 'date', 'summary', 'description', 'proj', 'column', 'posInColumn', 'dueDate')
 
 
 class TaskRequiredSkillSerializer(serializers.ModelSerializer):
@@ -91,4 +106,4 @@ class NotificationSerializer(serializers.ModelSerializer):
 class ColumnSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Column
-		fields = ('id','name', 'proj')
+		fields = ('id','date' ,'name', 'proj')
