@@ -20,6 +20,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 		projectDetails = {}
 
 		assignees = []
+		taskAssignees = []
 		columns = []
 		tasks = []
 
@@ -31,7 +32,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 			for result in tempResults:
 				tempUser = {}
 				tempUser["id"] = result.id
-				tempUser["date"] = result.date
+				tempUser["date"] = projAss.date # this sets the date to when the user was assigned the project
 				tempUser["username"] = result.username
 				tempUser["avatar"] = result.avatar
 				assignees.append(tempUser)
@@ -54,12 +55,23 @@ class ProjectSerializer(serializers.ModelSerializer):
 				tempTask["proj"] = task.proj.id
 				tempTask["column"] = task.column.id
 				tempTask["posInColumn"] = task.posInColumn
+
+				tempTaskAsses = TaskAssignee.objects.filter(tsk=task)
+				# maybe a check here like taskAsses <= projAsses
+				for taskAss in tempTaskAsses:
+					tempTaskAss = {}
+					tempTaskAss["id"] = taskAss.id
+					tempTaskAss["date"] = taskAss.date
+					tempTaskAss["task"] = taskAss.tsk
+					tempTaskAss["assignee"] = taskAss.assignee
+					taskAssignees.append(tempTaskAss)
+
+				tempTask["assignees"] = taskAssignees
 				tasks.append(tempTask)
 
 		projectDetails["assignees"] = assignees
 		projectDetails["columns"] = columns
-		projectDetails["tasks"] = tasks
-
+		projectDetails["tasks"] = tasks		
 		return projectDetails
 	class Meta:
 		model = Project

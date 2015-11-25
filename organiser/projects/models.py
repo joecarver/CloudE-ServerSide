@@ -31,6 +31,7 @@ post_save.connect(get_project_dependencies, sender=Project, dispatch_uid="smth_s
 class ProjectAssignee(models.Model):
 	proj = models.ForeignKey(Project)
 	assignee = models.ForeignKey(AppUser)
+	date = models.DateTimeField(auto_now_add=True)
 
 	class Meta:
 		#don't allow duplicate pairings
@@ -44,6 +45,9 @@ class Column(models.Model):
 	name = models.CharField(max_length=254, blank=False)
 	proj = models.ForeignKey(Project)
 
+	def __unicode__(self):
+		return self.name + " in project " + self.proj.title
+
 class Task(models.Model):
 	date = models.DateTimeField(auto_now_add=True)
 	summary = models.TextField(blank=False)
@@ -52,7 +56,7 @@ class Task(models.Model):
 	column = models.ForeignKey(Column)
 	dueDate = models.DateField(blank=False)
 	posInColumn = models.IntegerField(blank=False)
-	dueDate = models.DateTimeField(blank=True)
+	dueDate = models.DateField(blank=True)
 
 	class Meta:
 		unique_together = ['column', 'posInColumn']
