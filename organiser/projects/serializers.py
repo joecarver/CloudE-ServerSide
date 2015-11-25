@@ -50,7 +50,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 				tempTask["description"] = task.description
 				tempTask["proj"] = task.proj.id
 				tempTask["column"] = task.column.id
-				tempTask["columnPos"] = task.columnPos
+				tempTask["posInColumn"] = task.posInColumn
 				tasks.append(tempTask)
 
 		projectDetails["assignees"] = assignees
