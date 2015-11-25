@@ -9,6 +9,9 @@ class TestObjectSerializer(serializers.ModelSerializer):
 	testObjs = serializers.PrimaryKeyRelatedField(many=True, queryset=TestObject.objects.all())
 	owner = serializers.ReadOnlyField(source='owner.username')
 
+
+	permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
 	class Meta:
 		model = User
 		fields = ('id', 'username', 'testObjs', 'owner',)
