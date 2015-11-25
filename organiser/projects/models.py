@@ -7,6 +7,9 @@ class AppUser(models.Model):
     username = models.CharField(blank=False, max_length=254, unique=True)
     avatar = models.CharField(default='JamesCameron', max_length=254)
 
+    def __unicode__(self):
+        return 'User ' + self.title
+
 class Project(models.Model):
     title = models.TextField(blank=False)
     admin = models.ForeignKey(AppUser)
