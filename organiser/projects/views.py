@@ -20,11 +20,12 @@ class AppUserByName(generics.RetrieveUpdateDestroyAPIView):
 		uName = self.kwargs['username']
 		return AppUser.objects.get(uName)
 
-#Display all projects
+#Display all projects or create a new one
 class ProjectList(generics.ListCreateAPIView):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
 
+#update detail
 class Project(generics.RetrieveUpdateDestroyAPIView):
 	queryset = Project.objects.all()
 	serializer_class = ProjectSerializer
@@ -36,6 +37,7 @@ class ProjectAssignees(generics.ListCreateAPIView):
 		projID = self.kwargs['pk']
 		return ProjectAssignee.objects.filter(proj=projID)
 
+#view all tasks and create a new one
 class TaskList(generics.ListCreateAPIView):
 	queryset = Task.objects.all()
 	serializer_class = TaskSerializer
@@ -45,6 +47,7 @@ class TaskDetail(generics.RetrieveUpdateDestroyAPIView):
 	queryset = Task.objects.all()
 	serializer_class = TaskSerializer
 
+#view assignees for any given task, create a new one
 class TaskAssignees(generics.ListCreateAPIView):
 	serializer_class = TaskAssigneeSerializer
 	def get_queryset(self):
