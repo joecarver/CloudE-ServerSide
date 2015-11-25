@@ -22,6 +22,9 @@ def get_project_dependencies(sender, instance, **kwargs):
      #instance.product.stock -= instance.amount
      if kwargs.get('created', False):
 		ProjectAssignee(proj=instance, assignee=instance.admin).save()
+		Column(name="TO DO", proj=instance).save()
+		Column(name="IN PROGRESS", proj=instance).save()
+		Column(name="DONE", proj=instance).save()
 post_save.connect(get_project_dependencies, sender=Project, dispatch_uid="smth_sensible")
   
 class ProjectAssignee(models.Model):
@@ -45,12 +48,12 @@ class Task(models.Model):
 	description = models.TextField()
 	proj = models.ForeignKey(Project)
 	column = models.ForeignKey(Column)
-	columnPos = models.IntegerField(blank=False)
 	dueDate = models.DateField(blank=False)
+	posInColumn = models.IntegerField(blank=False)
 
 
 	class Meta:
-		unique_together = ['column', 'columnPos']
+		unique_together = ['column', 'posInColumn']
 	def __unicode__(self):
 		return self.summary #maybe add some more info
 
