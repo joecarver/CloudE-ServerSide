@@ -2,7 +2,23 @@ from rest_framework import generics
 import itertools
 from projects.models import AppUser, Project, ProjectAssignee, Task, TaskAssignee, TaskRequiredSkill, Notification, Column
 from projects.serializers import AppUserSerializer, TaskSerializer, TaskAssigneeSerializer, TaskRequiredSkillSerializer, NotificationSerializer, ColumnSerializer, ProjectSerializer, ProjectAssigneeSerializer
-from django.contrib.auth import get_user_model
+
+
+from django.contrib.auth import get_user_model#TODO redundant code?
+from snippets.serializers import TestObjectSerializer
+
+
+class TestObjectList(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = TestObjectSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
+
+
+
+
 
 class AppUserList(generics.ListCreateAPIView):
     queryset = AppUser.objects.all()

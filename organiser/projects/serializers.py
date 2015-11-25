@@ -1,6 +1,18 @@
 from rest_framework import serializers
 from projects.models import AppUser, Project, ProjectAssignee, Task, TaskAssignee, TaskRequiredSkill, Notification, Column
 
+#This is the permissions bit
+from django.contrib.auth.models import User
+
+class TestObjectSerializer(serializers.ModelSerializer):
+	""" Lists all the auth.Users and their TestObejcts"""
+	testObjs = serializers.PrimaryKeyRelatedField(many=True, queryset=TestObject.objects.all())
+	owner = serializers.ReadOnlyField(source='owner.username')
+
+	class Meta:
+		model = User
+		fields = ('id', 'username', 'testObjs', 'owner',)
+
 class AppUserSerializer(serializers.ModelSerializer):
 	projects = serializers.SerializerMethodField('dank')
 	def dank(self, appuser):
@@ -16,7 +28,7 @@ class AppUserSerializer(serializers.ModelSerializer):
 class ProjectSerializer(serializers.ModelSerializer):
 	details = serializers.SerializerMethodField('dank')
 	def dank(self, project):
-		
+
 		projectDetails = {}
 
 		assignees = []

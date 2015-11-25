@@ -1,7 +1,16 @@
 from django.db import models
 from django.db.models.signals import post_save
 
-# Create your models here.
+class TestObject(models.Model):
+    """
+    This is a test obejct that I intend to use in order to then apply it to AppUser
+    """
+    text = models.TextField(default='This is Stefan!')
+    owner = models.ForeignKey('auth.User', related_name='testObj')
+
+    def __unicode__(self):
+        return "Test Obj: <"+text+ "> owned by: "+owner
+
 
 class AppUser(models.Model):
     username = models.CharField(blank=False, max_length=254, unique=True)
@@ -26,7 +35,7 @@ def get_project_dependencies(sender, instance, **kwargs):
 		Column(name="IN PROGRESS", proj=instance).save()
 		Column(name="DONE", proj=instance).save()
 post_save.connect(get_project_dependencies, sender=Project, dispatch_uid="smth_sensible")
-  
+
 class ProjectAssignee(models.Model):
 	proj = models.ForeignKey(Project)
 	assignee = models.ForeignKey(AppUser)
