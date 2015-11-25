@@ -107,3 +107,4 @@ class ColumnSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Column
 		fields = ('id','date' ,'name', 'proj')
+
