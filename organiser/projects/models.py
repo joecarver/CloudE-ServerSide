@@ -40,6 +40,7 @@ class Column(models.Model):
 	proj = models.ForeignKey(Project)
 
 class Task(models.Model):
+	date = models.DateTimeField(auto_now_add=True)
 	summary = models.TextField(blank=False)
 	description = models.TextField()
 	proj = models.ForeignKey(Project)

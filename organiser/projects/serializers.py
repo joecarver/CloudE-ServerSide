@@ -59,7 +59,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 		return projectDetails
 	class Meta:
 		model = Project
-		fields = ('id','title', 'admin', 'details')
+		fields = ('id', 'date', 'title', 'admin', 'details')
 
 class TaskSerializer(serializers.ModelSerializer):
 
