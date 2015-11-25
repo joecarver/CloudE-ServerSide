@@ -65,6 +65,11 @@ class ProjectSerializer(serializers.ModelSerializer):
 		model = Project
 		fields = ('id', 'title', 'admin', 'details')
 
+class ProjectAssigneeSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = ProjectAssignee
+		fields = ('proj', 'assignee')
+
 class TaskSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Task

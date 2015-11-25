@@ -52,7 +52,7 @@ class Task(models.Model):
 	column = models.ForeignKey(Column)
 	dueDate = models.DateField(blank=False)
 	posInColumn = models.IntegerField(blank=False)
-
+	dueDate = models.DateTimeField(blank=True)
 
 	class Meta:
 		unique_together = ['column', 'posInColumn']

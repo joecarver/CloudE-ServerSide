@@ -1,7 +1,7 @@
 from rest_framework import generics
 import itertools
 from projects.models import AppUser, Project, ProjectAssignee, Task, TaskAssignee, TaskRequiredSkill, Notification, Column
-from projects.serializers import AppUserSerializer, TaskSerializer, TaskAssigneeSerializer, TaskRequiredSkillSerializer, NotificationSerializer, ColumnSerializer, ProjectSerializer
+from projects.serializers import AppUserSerializer, TaskSerializer, TaskAssigneeSerializer, TaskRequiredSkillSerializer, NotificationSerializer, ColumnSerializer, ProjectSerializer, ProjectAssigneeSerializer
 from django.contrib.auth import get_user_model
 
 class AppUserList(generics.ListCreateAPIView):
@@ -20,21 +20,28 @@ class AppUserByName(generics.RetrieveUpdateDestroyAPIView):
 		uName = self.kwargs['username']
 		return AppUser.objects.get(uName)
 
+#Display all projects
 class ProjectList(generics.ListCreateAPIView):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
 
 #shows all assignees for specified project, allows adding new assignees
-class Project(generics.RetrieveUpdateDestroyAPIView):
+class Project(generics.ListAPIView):
 	queryset = Project.objects.all()
 	serializer_class = ProjectSerializer
+
+#shows all assignees for specified project, allows adding new assignees
+class ProjectAssignees(generics.ListCreateAPIView):
+	serializer_class = ProjectAssigneeSerializer
+	def get_queryset(self):
+		projID = self.kwargs['pk']
+		return ProjectAssignee.objects.filter(proj=projID)
 
 class TaskList(generics.ListCreateAPIView):
 	queryset = Task.objects.all()
 	serializer_class = TaskSerializer
 
-#Need to be able to serialize multiple model classes,
-# so this view can manage both assignees to a task, and skills required by task
+#View a specific task and update any of its properties
 class TaskDetail(generics.RetrieveUpdateDestroyAPIView):
 	queryset = Task.objects.all()
 	serializer_class = TaskSerializer
