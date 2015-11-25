@@ -6,6 +6,7 @@ from django.db.models.signals import post_save
 class AppUser(models.Model):
     username = models.CharField(blank=False, max_length=254, unique=True)
     avatar = models.CharField(default='JamesCameron', max_length=254)
+    date = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
         return 'User ' + self.username
@@ -39,6 +40,7 @@ class ProjectAssignee(models.Model):
 		return self.assignee.username + ' assigned to ' + self.proj.title
 
 class Column(models.Model):
+	date = models.DateTimeField(auto_now_add=True)
 	name = models.CharField(max_length=254, blank=False)
 	proj = models.ForeignKey(Project)
 
@@ -58,6 +60,7 @@ class Task(models.Model):
 		return self.summary #maybe add some more info
 
 class TaskAssignee(models.Model):
+	date = models.DateTimeField(auto_now_add=True)
 	tsk = models.ForeignKey(Task)
 	assignee = models.ForeignKey(AppUser)
 

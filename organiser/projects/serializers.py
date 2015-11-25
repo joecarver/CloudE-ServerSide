@@ -11,7 +11,7 @@ class AppUserSerializer(serializers.ModelSerializer):
  		return resultIds
  	class Meta:
  		model = AppUser
- 		fields = ('id','username','avatar','projects')
+ 		fields = ('id', 'date', 'username','avatar','projects')
 
 class ProjectSerializer(serializers.ModelSerializer):
 	details = serializers.SerializerMethodField('dank')
@@ -31,6 +31,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 			for result in tempResults:
 				tempUser = {}
 				tempUser["id"] = result.id
+				tempUser["date"] = result.date
 				tempUser["username"] = result.username
 				tempUser["avatar"] = result.avatar
 				assignees.append(tempUser)
@@ -38,6 +39,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 		for projCol in projColResults:
 			tempCol = {}
 			tempCol["id"] = projCol.id
+			tempCol["date"] = projCol.date
 			tempCol["name"] = projCol.name
 			tempCol["proj"] = projCol.proj.id
 			columns.append(tempCol)
@@ -87,4 +89,4 @@ class NotificationSerializer(serializers.ModelSerializer):
 class ColumnSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Column
-		fields = ('id','name', 'proj')
+		fields = ('id','date' ,'name', 'proj')
