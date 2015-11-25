@@ -46,6 +46,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 			for task in tempTasks:
 				tempTask = {}
 				tempTask["id"] = task.id
+				tempTask["date"] = task.date
 				tempTask["summary"] = task.summary
 				tempTask["description"] = task.description
 				tempTask["proj"] = task.proj.id
@@ -60,12 +61,12 @@ class ProjectSerializer(serializers.ModelSerializer):
 		return projectDetails
 	class Meta:
 		model = Project
-		fields = ('id', 'date', 'title', 'admin', 'details')
+		fields = ('id', 'title', 'admin', 'details')
 
 class TaskSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Task
-		fields = ('id','summary', 'description', 'proj', 'column', 'columnPos', 'dueDate')
+		fields = ('id', 'date', 'summary', 'description', 'proj', 'column', 'columnPos', 'dueDate')
 
 
 class TaskRequiredSkillSerializer(serializers.ModelSerializer):

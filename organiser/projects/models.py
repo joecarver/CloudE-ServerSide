@@ -8,7 +8,7 @@ class AppUser(models.Model):
     avatar = models.CharField(default='JamesCameron', max_length=254)
 
     def __unicode__(self):
-        return 'User ' + self.title
+        return 'User ' + self.username
 
 class Project(models.Model):
     title = models.TextField(blank=False)
@@ -46,7 +46,7 @@ class Task(models.Model):
 	proj = models.ForeignKey(Project)
 	column = models.ForeignKey(Column)
 	columnPos = models.IntegerField(blank=False)
-	dueDate = models.DateTimeField(blank=False)
+	dueDate = models.DateField(blank=False)
 
 
 	class Meta:
