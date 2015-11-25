@@ -48,7 +48,7 @@ class Task(models.Model):
 	proj = models.ForeignKey(Project)
 	column = models.ForeignKey(Column)
 	posInColumn = models.IntegerField(blank=False)
-	dueDate = models.DateTimeField(blank=True)
+	#dueDate = models.DateTimeField(blank=True)
 
 
 	class Meta:
