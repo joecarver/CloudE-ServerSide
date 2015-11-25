@@ -1,5 +1,6 @@
 #Compiled python files
 *.pyc
+.pyc
 
 #BS MAC CRAP YOU MAC USERS!
 .DS_Store

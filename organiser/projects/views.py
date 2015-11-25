@@ -39,14 +39,17 @@ class TaskDetail(generics.RetrieveUpdateDestroyAPIView):
 	queryset = Task.objects.all()
 	serializer_class = TaskSerializer
 
-		
-class TaskSkills(generics.RetrieveUpdateDestroyAPIView):
-	queryset = Task.objects.all()
-	serializer_class = TaskRequiredSkillSerializer
-
-class TaskAssignees(generics.RetrieveUpdateDestroyAPIView):
-	queryset = Task.objects.all()
+class TaskAssignees(generics.ListCreateAPIView):
 	serializer_class = TaskAssigneeSerializer
+	def get_queryset(self):
+		taskID = self.kwargs['pk']
+		return TaskAssignee.objects.filter(tsk=taskID)
+		
+
+
+class TaskSkills(generics.RetrieveUpdateDestroyAPIView):
+	queryset = TaskRequiredSkill.objects.all()
+	serializer_class = TaskRequiredSkillSerializer
 
 class NotificationView(generics.RetrieveUpdateDestroyAPIView):
 	serializer_class = NotificationSerializer
