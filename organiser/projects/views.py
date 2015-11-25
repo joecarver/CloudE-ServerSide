@@ -25,8 +25,7 @@ class ProjectList(generics.ListCreateAPIView):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
 
-#shows all assignees for specified project, allows adding new assignees
-class Project(generics.ListAPIView):
+class Project(generics.RetrieveUpdateDestroyAPIView):
 	queryset = Project.objects.all()
 	serializer_class = ProjectSerializer
 
