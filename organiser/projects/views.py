@@ -66,3 +66,7 @@ class NotificationView(generics.RetrieveUpdateDestroyAPIView):
 class ColumnView(generics.ListCreateAPIView):
 	queryset = Column.objects.all()
 	serializer_class = ColumnSerializer
+
+class ColumnDetailView(generics.RetrieveUpdateDestroyAPIView):
+	queryset = Column.objects.all()
+	serializer_class = ColumnSerializer
