@@ -27,7 +27,7 @@ def get_project_dependencies(sender, instance, **kwargs):
 		Column(name="IN PROGRESS", proj=instance).save()
 		Column(name="DONE", proj=instance).save()
 post_save.connect(get_project_dependencies, sender=Project, dispatch_uid="smth_sensible")
-  
+
 class ProjectAssignee(models.Model):
 	proj = models.ForeignKey(Project)
 	assignee = models.ForeignKey(AppUser)
@@ -58,8 +58,6 @@ class Task(models.Model):
 	posInColumn = models.IntegerField(blank=False)
 	dueDate = models.DateField(blank=True)
 
-	class Meta:
-		unique_together = ['column', 'posInColumn']
 	def __unicode__(self):
 		return self.summary #maybe add some more info
 
@@ -72,7 +70,7 @@ class TaskAssignee(models.Model):
 		unique_together = ['tsk', 'assignee']
 
 	def __unicode__(self):
-		return self.tsk.summary + " - in project - " + self.tsk.proj.title + " - assigned to: " + self.assignee.usernameAp
+		return self.tsk.summary + " - in project - " + self.tsk.proj.title + " - assigned to: " + self.assignee.username
 
 class TaskRequiredSkill(models.Model):
 	tsk = models.ForeignKey(Task)

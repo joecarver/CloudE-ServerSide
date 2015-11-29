@@ -7,7 +7,7 @@ class AppUserSerializer(serializers.ModelSerializer):
 		results = ProjectAssignee.objects.filter(assignee=appuser.id)
 		resultIds = []
 		for result in results:
-			resultIds.append(result.id)
+			resultIds.append(result.proj.id)
  		return resultIds
  	class Meta:
  		model = AppUser
@@ -16,11 +16,10 @@ class AppUserSerializer(serializers.ModelSerializer):
 class ProjectSerializer(serializers.ModelSerializer):
 	details = serializers.SerializerMethodField('dank')
 	def dank(self, project):
-		
+
 		projectDetails = {}
 
 		assignees = []
-		taskAssignees = []
 		columns = []
 		tasks = []
 
@@ -55,15 +54,18 @@ class ProjectSerializer(serializers.ModelSerializer):
 				tempTask["proj"] = task.proj.id
 				tempTask["column"] = task.column.id
 				tempTask["posInColumn"] = task.posInColumn
+				tempTask["dueDate"] = task.dueDate
 
-				tempTaskAsses = TaskAssignee.objects.filter(tsk=task)
+				taskAssignees = []
+				tempTaskAsses = TaskAssignee.objects.filter(tsk=task.id)
 				# maybe a check here like taskAsses <= projAsses
 				for taskAss in tempTaskAsses:
 					tempTaskAss = {}
-					tempTaskAss["id"] = taskAss.id
+					tempTaskAss["id"] = taskAss.assignee.id
 					tempTaskAss["date"] = taskAss.date
-					tempTaskAss["task"] = taskAss.tsk
-					tempTaskAss["assignee"] = taskAss.assignee
+					tempTaskAss["task"] = taskAss.tsk.id
+					tempTaskAss["username"] = taskAss.assignee.username
+					tempTaskAss["avatar"] = taskAss.assignee.avatar
 					taskAssignees.append(tempTaskAss)
 
 				tempTask["assignees"] = taskAssignees
@@ -71,7 +73,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 
 		projectDetails["assignees"] = assignees
 		projectDetails["columns"] = columns
-		projectDetails["tasks"] = tasks		
+		projectDetails["tasks"] = tasks
 		return projectDetails
 	class Meta:
 		model = Project
@@ -107,4 +109,3 @@ class ColumnSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Column
 		fields = ('id','date' ,'name', 'proj')
-
