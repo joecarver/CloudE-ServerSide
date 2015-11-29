@@ -75,13 +75,6 @@ WSGI_APPLICATION = 'organiser.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-<<<<<<< HEAD
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-=======
 if os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine'):
     # Running on production App Engine, so use a Google Cloud SQL database.
     DATABASES = {
@@ -104,7 +97,6 @@ else:
         	'USER': 'django',
         	'PASSWORD': 'tssmjdv2015',
         }
->>>>>>> parent of cbea7e4... Inlcuded note to say which database it is correct for
     }
 }
 
