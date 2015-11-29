@@ -71,7 +71,9 @@ WSGI_APPLICATION = 'organiser.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
+#===============[ Note ]=========================================
+ #       This is the correct database file for the server      #
+#================================================================
 if os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine'):
     # Running on production App Engine, so use a Google Cloud SQL database.
     DATABASES = {
