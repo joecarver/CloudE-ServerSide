@@ -1,9 +1,12 @@
 from django.conf.urls import url
 from . import views
 
+from django.conf.urls import include
+
+
 urlpatterns = [
     url(r'^appusers/$', views.AppUserList.as_view()),
-	url(r'^appusers/(?P<pk>[0-9]+)$', views.AppUser.as_view()),
+	url(r'^appusers/(?P<pk>[0-9]+)$', views.AppUsers.as_view()),
 	url(r'^appusers/(?P<username>.+)/$', views.AppUserByName.as_view()),
     url(r'^projects/$', views.ProjectList.as_view()),
     url(r'^projects/(?P<pk>[0-9]+)/$', views.Project.as_view()),
@@ -15,5 +18,10 @@ urlpatterns = [
     url(r'^notifications/(?P<pk>[0-9]+)/$', views.NotificationView.as_view()),
     url(r'^columns/$', views.ColumnView.as_view()),
     url(r'^columns/(?P<pk>[0-9]+)/$', views.ColumnDetailView.as_view()),
+]
 
+urlpatterns += [
+    url(r'^test/$', views.TestObjectList.as_view()),
+    url(r'^login/', include('rest_framework.urls',
+                               namespace='rest_framework')),
 ]

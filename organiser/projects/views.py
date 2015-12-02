@@ -2,23 +2,40 @@ from rest_framework import generics
 import itertools
 from projects.models import AppUser, Project, ProjectAssignee, Task, TaskAssignee, TaskRequiredSkill, Notification, Column
 from projects.serializers import AppUserSerializer, TaskSerializer, TaskAssigneeSerializer, TaskRequiredSkillSerializer, NotificationSerializer, ColumnSerializer, ProjectSerializer, ProjectAssigneeSerializer
-from django.contrib.auth import get_user_model
+
+
+from django.contrib.auth import get_user_model#TODO redundant code?
+from projects.serializers import TestObjectSerializer
+from django.contrib.auth.models import User
+
+
+class TestObjectList(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = TestObjectSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
+
+
+
+
 
 class AppUserList(generics.ListCreateAPIView):
     queryset = AppUser.objects.all()
     serializer_class = AppUserSerializer
 
-class AppUser(generics.RetrieveUpdateDestroyAPIView):
+class AppUsers(generics.RetrieveUpdateDestroyAPIView):
 	queryset = AppUser.objects.all()
 	serializer_class = AppUserSerializer
 
-#TODO - FIX - 'AppUser has no attribute 'objects''
 class AppUserByName(generics.RetrieveUpdateDestroyAPIView):
 	serializer_class = AppUserSerializer
+	lookup_field = 'username'
 
 	def get_queryset(self):
 		uName = self.kwargs['username']
-		return AppUser.objects.get(uName)
+		return AppUser.objects.filter(username=uName)
 
 #Display all projects or create a new one
 class ProjectList(generics.ListCreateAPIView):
