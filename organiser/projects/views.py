@@ -13,7 +13,6 @@ from rest_framework import permissions
 class AppUserList(generics.ListCreateAPIView):
     queryset = AppUser.objects.all()
     serializer_class = AppUserSerializer
-    permission_classes = (permissions.IsAuthenticated,)
 
 class AppUsers(generics.RetrieveUpdateDestroyAPIView):
     queryset = AppUser.objects.all()

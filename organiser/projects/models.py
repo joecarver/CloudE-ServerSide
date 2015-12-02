@@ -4,17 +4,6 @@ from django.db.models.signals import post_save
 #This is the permissions bit
 from django.contrib.auth.models import User
 
-# class TestObject(models.Model):
-#     """
-#     This is a test obejct that I intend to use in order to then apply it to AppUser
-#     """
-#     text = models.TextField(default='This is Stefan!')
-#     owner = models.ForeignKey('auth.User', related_name='testObj')
-
-#     def __unicode__(self):
-#         return "Test Obj: <"+text+ "> owned by: "+owner
-
-
 class AppUser(User):
     avatar = models.CharField(default='JamesCameron', max_length=254)
     date = models.DateTimeField(auto_now_add=True)
