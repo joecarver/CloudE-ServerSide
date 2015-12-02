@@ -67,8 +67,6 @@ class Task(models.Model):
 	posInColumn = models.IntegerField(blank=False)
 	dueDate = models.DateField(blank=True)
 
-	class Meta:
-		unique_together = ['column', 'posInColumn']
 	def __unicode__(self):
 		return self.summary #maybe add some more info
 
@@ -81,7 +79,7 @@ class TaskAssignee(models.Model):
 		unique_together = ['tsk', 'assignee']
 
 	def __unicode__(self):
-		return self.tsk.summary + " - in project - " + self.tsk.proj.title + " - assigned to: " + self.assignee.usernameAp
+		return self.tsk.summary + " - in project - " + self.tsk.proj.title + " - assigned to: " + self.assignee.username
 
 class TaskRequiredSkill(models.Model):
 	tsk = models.ForeignKey(Task)
