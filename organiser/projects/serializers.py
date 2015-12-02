@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from projects.models import AppUser, Project, ProjectAssignee, Task, TaskAssignee, TaskRequiredSkill, Notification, Column
+from projects.models import *
 
 #This is the permissions bit
 from django.contrib.auth.models import User
