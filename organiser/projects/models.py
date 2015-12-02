@@ -1,15 +1,15 @@
 from django.db import models
 from django.db.models.signals import post_save
 
-class TestObject(models.Model):
-    """
-    This is a test obejct that I intend to use in order to then apply it to AppUser
-    """
-    text = models.TextField(default='This is Stefan!')
-    owner = models.ForeignKey('auth.User', related_name='testObj')
+# class TestObject(models.Model):
+#     """
+#     This is a test obejct that I intend to use in order to then apply it to AppUser
+#     """
+#     text = models.TextField(default='This is Stefan!')
+#     owner = models.ForeignKey('auth.User', related_name='testObj')
 
-    def __unicode__(self):
-        return "Test Obj: <"+text+ "> owned by: "+owner
+#     def __unicode__(self):
+#         return "Test Obj: <"+text+ "> owned by: "+owner
 
 
 class AppUser(models.Model):

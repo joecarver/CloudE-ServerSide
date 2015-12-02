@@ -5,16 +5,19 @@ from projects.serializers import AppUserSerializer, TaskSerializer, TaskAssignee
 
 
 from django.contrib.auth import get_user_model#TODO redundant code?
-from projects.serializers import TestObjectSerializer
+# from projects.serializers import TestObjectSerializer
 from django.contrib.auth.models import User
+from rest_framework import permissions
 
 
-class TestObjectList(generics.ListAPIView):
-    queryset = User.objects.all()
-    serializer_class = TestObjectSerializer
+# class TestObjectList(generics.ListAPIView):
+#     queryset = User.objects.all()
+#     serializer_class = TestObjectSerializer
 
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+#     permission_classes = (permissions.IsAuthenticated,)
+
+#     def perform_create(self, serializer):
+#         serializer.save(owner=self.request.user)
 
 
 

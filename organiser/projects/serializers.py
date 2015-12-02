@@ -4,20 +4,20 @@ from projects.models import *
 #This is the permissions bit
 from django.contrib.auth.models import User
 
-class TestObjectSerializer(serializers.ModelSerializer):
-	""" Lists all the auth.Users and their TestObejcts"""
-	testObjs = serializers.PrimaryKeyRelatedField(many=True, queryset=TestObject.objects.all())
-	owner = serializers.SerializerMethodField('test_method')
+# class TestObjectSerializer(serializers.ModelSerializer):
+# 	""" Lists all the auth.Users and their TestObejcts"""
+# 	testObjs = serializers.PrimaryKeyRelatedField(many=True, queryset=TestObject.objects.all())
+# 	owner = serializers.SerializerMethodField('test_method')
 
-	class Meta:
-		model = User
-		fields = ('id', 'text', 'owner',)
+# 	class Meta:
+# 		model = User
+# 		fields = ('id', 'text', 'owner',)
 
-	def perform_create(self, serializer):
-		serializer.save(owner=self.request.user)
+# 	def perform_create(self, serializer):
+# 		serializer.save(owner=self.request.user)
 
-	def test_method(self, testobj):
-		return testobj.owner.username
+# 	def test_method(self, testobj):
+# 		return testobj.owner.username
 
 class AppUserSerializer(serializers.ModelSerializer):
 	projects = serializers.SerializerMethodField('dank')

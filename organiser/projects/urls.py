@@ -21,7 +21,7 @@ urlpatterns = [
 ]
 
 urlpatterns += [
-    url(r'^test/$', views.TestObjectList.as_view()),
+    # url(r'^test/$', views.TestObjectList.as_view()),
     url(r'^login/', include('rest_framework.urls',
                                namespace='rest_framework')),
 ]
