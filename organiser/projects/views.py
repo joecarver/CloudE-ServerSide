@@ -18,10 +18,12 @@ class AppUserList(generics.ListCreateAPIView):
 class AppUsers(generics.RetrieveUpdateDestroyAPIView):
     queryset = AppUser.objects.all()
     serializer_class = AppUserSerializer
+    permission_classes = (permissions.IsAuthenticated,)
 
 class AppUserByName(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = AppUserSerializer
     lookup_field = 'username'
+    permission_classes = (permissions.IsAuthenticated,)
 
     def get_queryset(self):
         uName = self.kwargs['username']
@@ -37,10 +39,12 @@ class ProjectList(generics.ListCreateAPIView):
 class Project(generics.RetrieveUpdateDestroyAPIView):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
+    permission_classes = (permissions.IsAuthenticated,)
 
 #shows all assignees for specified project, allows adding new assignees
 class ProjectAssignees(generics.ListCreateAPIView):
     serializer_class = ProjectAssigneeSerializer
+    permission_classes = (permissions.IsAuthenticated,)
 
     def get_queryset(self):
         projID = self.kwargs['pk']
