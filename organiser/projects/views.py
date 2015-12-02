@@ -29,10 +29,8 @@ class AppUsers(generics.RetrieveUpdateDestroyAPIView):
 	queryset = AppUser.objects.all()
 	serializer_class = AppUserSerializer
 
-#TODO - FIX - 'AppUser has no attribute 'objects''
 class AppUserByName(generics.RetrieveUpdateDestroyAPIView):
 	serializer_class = AppUserSerializer
-	# queryset = AppUser.objects.filter(username=self.kwargs['username'])
 	lookup_field = 'username'
 
 	def get_queryset(self):
