@@ -37,13 +37,7 @@ class AppUserByName(generics.RetrieveUpdateDestroyAPIView):
 
 	def get_queryset(self):
 		uName = self.kwargs['username']
-		print "This is the username: %s" % uName
-		print AppUser
 		return AppUser.objects.filter(username=uName)
-
-
-	# user = get_user_model().objects.create_user(serialized.init_data['username'], email=serialized.init_data['email'], password=serialized.init_data['password'])
-
 
 #Display all projects or create a new one
 class ProjectList(generics.ListCreateAPIView):
