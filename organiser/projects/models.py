@@ -1,6 +1,9 @@
 from django.db import models
 from django.db.models.signals import post_save
 
+#This is the permissions bit
+from django.contrib.auth.models import User
+
 # class TestObject(models.Model):
 #     """
 #     This is a test obejct that I intend to use in order to then apply it to AppUser
@@ -12,8 +15,7 @@ from django.db.models.signals import post_save
 #         return "Test Obj: <"+text+ "> owned by: "+owner
 
 
-class AppUser(models.Model):
-    username = models.CharField(blank=False, max_length=254, unique=True)
+class AppUser(User):
     avatar = models.CharField(default='JamesCameron', max_length=254)
     date = models.DateTimeField(auto_now_add=True)
 
