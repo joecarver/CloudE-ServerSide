@@ -5,7 +5,8 @@ from projects.serializers import AppUserSerializer, TaskSerializer, TaskAssignee
 
 
 from django.contrib.auth import get_user_model#TODO redundant code?
-from snippets.serializers import TestObjectSerializer
+from projects.serializers import TestObjectSerializer
+from django.contrib.auth.models import User
 
 
 class TestObjectList(generics.ListAPIView):
