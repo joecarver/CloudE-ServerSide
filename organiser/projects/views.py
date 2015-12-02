@@ -25,17 +25,25 @@ class AppUserList(generics.ListCreateAPIView):
     queryset = AppUser.objects.all()
     serializer_class = AppUserSerializer
 
-class AppUser(generics.RetrieveUpdateDestroyAPIView):
+class AppUsers(generics.RetrieveUpdateDestroyAPIView):
 	queryset = AppUser.objects.all()
 	serializer_class = AppUserSerializer
 
 #TODO - FIX - 'AppUser has no attribute 'objects''
 class AppUserByName(generics.RetrieveUpdateDestroyAPIView):
 	serializer_class = AppUserSerializer
+	# queryset = AppUser.objects.filter(username=self.kwargs['username'])
+	lookup_field = 'username'
 
 	def get_queryset(self):
 		uName = self.kwargs['username']
-		return AppUser.objects.get(uName)
+		print "This is the username: %s" % uName
+		print AppUser
+		return AppUser.objects.filter(username=uName)
+
+
+	# user = get_user_model().objects.create_user(serialized.init_data['username'], email=serialized.init_data['email'], password=serialized.init_data['password'])
+
 
 #Display all projects or create a new one
 class ProjectList(generics.ListCreateAPIView):
