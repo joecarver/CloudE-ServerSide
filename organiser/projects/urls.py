@@ -14,7 +14,7 @@ urlpatterns = [
     url(r'^tasks/$', views.TaskList.as_view()),
     url(r'^tasks/(?P<pk>[0-9]+)/$', views.TaskDetail.as_view()),
     url(r'^tasks/assignees/(?P<pk>[0-9]+)/$', views.TaskAssignees.as_view()),
-    url(r'^tasks/skills/(?P<pk>[0-9]+)/$', views.TaskSkills.as_view()),
+    # url(r'^tasks/skills/(?P<pk>[0-9]+)/$', views.TaskSkills.as_view()),
     url(r'^notifications/(?P<pk>[0-9]+)/$', views.NotificationView.as_view()),
     url(r'^columns/$', views.ColumnView.as_view()),
     url(r'^columns/(?P<pk>[0-9]+)/$', views.ColumnDetailView.as_view()),

@@ -1,7 +1,7 @@
 from rest_framework import generics
 import itertools
-from projects.models import AppUser, Project, ProjectAssignee, Task, TaskAssignee, TaskRequiredSkill, Notification, Column
-from projects.serializers import AppUserSerializer, TaskSerializer, TaskAssigneeSerializer, TaskRequiredSkillSerializer, NotificationSerializer, ColumnSerializer, ProjectSerializer, ProjectAssigneeSerializer
+from projects.models import AppUser, Project, ProjectAssignee, Task, TaskAssignee, Notification, Column
+from projects.serializers import AppUserSerializer, TaskSerializer, TaskAssigneeSerializer, NotificationSerializer, ColumnSerializer, ProjectSerializer, ProjectAssigneeSerializer
 
 
 from django.contrib.auth import get_user_model#TODO redundant code?
@@ -71,9 +71,9 @@ class TaskAssignees(generics.ListCreateAPIView):
 		taskID = self.kwargs['pk']
 		return TaskAssignee.objects.filter(tsk=taskID)
 
-class TaskSkills(generics.RetrieveUpdateDestroyAPIView):
-	queryset = TaskRequiredSkill.objects.all()
-	serializer_class = TaskRequiredSkillSerializer
+# class TaskSkills(generics.RetrieveUpdateDestroyAPIView):
+# 	queryset = TaskRequiredSkill.objects.all()
+# 	serializer_class = TaskRequiredSkillSerializer
 
 class NotificationView(generics.RetrieveUpdateDestroyAPIView):
 	serializer_class = NotificationSerializer
