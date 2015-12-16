@@ -71,7 +71,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'organiser.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 if os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine'):
@@ -79,7 +78,7 @@ if os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine'):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'HOST': '/cloudsql/cloude-restfulservice:something',
+            'HOST': '/cloudsql/comp3207-server:brain',
             'NAME': 'brain',
         	'USER': 'clouddjango',
       	  	'PASSWORD': 'tssmjdv2015',
@@ -91,13 +90,12 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'HOST': '2001:4860:4864:1:2b8:314d:d105:4e4d',
+            'HOST': '2001:4860:4864:1:4508:ac0c:e5b3:7966',
 	        'NAME': 'brain',
         	'USER': 'django',
         	'PASSWORD': 'tssmjdv2015',
         }
     }
-
 
 
 # Internationalization
