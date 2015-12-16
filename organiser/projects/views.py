@@ -3,33 +3,30 @@ import itertools
 from projects.models import AppUser, Project, ProjectAssignee, Task, TaskAssignee, TaskRequiredSkill, Notification, Column
 from projects.serializers import AppUserSerializer, TaskSerializer, TaskAssigneeSerializer, TaskRequiredSkillSerializer, NotificationSerializer, ColumnSerializer, ProjectSerializer, ProjectAssigneeSerializer
 
-
-# from projects.serializers import TestObjectSerializer
-from django.contrib.auth.models import User
+#Used to hash the raw password that is used in #/appusers
+from django.contrib.auth import hashers
+#Defines how the level authentication each view can have
 from rest_framework import permissions
 
-from django.contrib.auth import hashers
 
 class AppUserList(generics.ListCreateAPIView):
+    """
+    Lists all the users in the system.
+    Shows: username, email, password (Hashed), avatar (URL link), projects (ID List)
+    """
     queryset = AppUser.objects.all()
     serializer_class = AppUserSerializer
 
+
     def post(self, request, *args, **kwargs):
-        print "--------=======-------------"
-        print request
-        print "-----"
-        print request.DATA
-        print "-----"
-        print request.FILES
-        print "---------========-----------\n\n\n"
+        """ @Override
+        Overriden in order to hash the password before saving it.
+        """
         raw_password = request.DATA.__getitem__('password')
-        hashed_password = hashers.make_password(raw_password,"JlZLpAE9lxs1");
+
+        hashed_password = hashers   .make_password(raw_password,"JlZLpAE9lxs1");
         request.DATA.__setitem__('password', hashed_password)
-        print "---------========-----------"
-        print request.DATA
-        print "-----"
-        print request.FILES
-        print "---------========-----------\n\n"
+
         return super(AppUserList,self).post(request, *args, **kwargs)
 
 class AppUsers(generics.RetrieveUpdateDestroyAPIView):
