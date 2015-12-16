@@ -6,7 +6,7 @@ from django.conf.urls import include
 
 urlpatterns = [
     url(r'^appusers/$', views.AppUserList.as_view()),
-	url(r'^appusers/(?P<pk>[0-9]+)$', views.AppUsers.as_view()),
+	url(r'^appusers/(?P<pk>[0-9]+)/$', views.AppUsers.as_view()),
 	url(r'^appusers/(?P<username>.+)/$', views.AppUserByName.as_view()),
     url(r'^projects/$', views.ProjectList.as_view()),
     url(r'^projects/(?P<pk>[0-9]+)/$', views.Project.as_view()),
