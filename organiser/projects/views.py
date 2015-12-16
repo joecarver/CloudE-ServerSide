@@ -4,15 +4,33 @@ from projects.models import AppUser, Project, ProjectAssignee, Task, TaskAssigne
 from projects.serializers import AppUserSerializer, TaskSerializer, TaskAssigneeSerializer, TaskRequiredSkillSerializer, NotificationSerializer, ColumnSerializer, ProjectSerializer, ProjectAssigneeSerializer
 
 
-from django.contrib.auth import get_user_model#TODO redundant code?
 # from projects.serializers import TestObjectSerializer
 from django.contrib.auth.models import User
 from rest_framework import permissions
 
+from django.contrib.auth import hashers
 
 class AppUserList(generics.ListCreateAPIView):
     queryset = AppUser.objects.all()
     serializer_class = AppUserSerializer
+
+    def post(self, request, *args, **kwargs):
+        print "--------=======-------------"
+        print request
+        print "-----"
+        print request.DATA
+        print "-----"
+        print request.FILES
+        print "---------========-----------\n\n\n"
+        raw_password = request.DATA.__getitem__('password')
+        hashed_password = hashers.make_password(raw_password,"JlZLpAE9lxs1");
+        request.DATA.__setitem__('password', hashed_password)
+        print "---------========-----------"
+        print request.DATA
+        print "-----"
+        print request.FILES
+        print "---------========-----------\n\n"
+        return super(AppUserList,self).post(request, *args, **kwargs)
 
 class AppUsers(generics.RetrieveUpdateDestroyAPIView):
     queryset = AppUser.objects.all()
