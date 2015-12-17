@@ -9,7 +9,7 @@ from django.contrib.auth import hashers
 from rest_framework import permissions
 
 
-def rehash(self, request):
+def rehash(request):
     """
     Rehashes the password in ta given request
     @return RequestDict - With hashed password field
@@ -41,6 +41,14 @@ class AppUsers(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = AppUserSerializer
     permission_classes = (permissions.IsAuthenticated,)
 
+    def update(self, request, *args, **kwargs):
+        """ @Override
+        Overriden in order to hash the password before saving it.
+        """
+        request = rehash(request);
+        return super(AppUsers,self).update(request, *args, **kwargs)
+
+
 #Find an app user by username
 class AppUserByName(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = AppUserSerializer
@@ -50,6 +58,13 @@ class AppUserByName(generics.RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
         uName = self.kwargs['username']
         return AppUser.objects.filter(username=uName)
+
+    def update(self, request, *args, **kwargs):
+        """ @Override
+        Overriden in order to hash the password before saving it.
+        """
+        request = rehash(request);
+        return super(AppUserByName,self).update(request, *args, **kwargs)
 
 #Display all projects or create a new one
 class ProjectList(generics.ListCreateAPIView):
