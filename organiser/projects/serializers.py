@@ -93,10 +93,10 @@ class TaskSerializer(serializers.ModelSerializer):
 		fields = ('id', 'date', 'summary', 'description', 'proj', 'column', 'posInColumn', 'dueDate')
 
 
-class TaskRequiredSkillSerializer(serializers.ModelSerializer):
-	class Meta:
-		model = TaskRequiredSkill
-		fields = ('tsk', 'skill')
+# class TaskRequiredSkillSerializer(serializers.ModelSerializer):
+# 	class Meta:
+# 		model = TaskRequiredSkill
+# 		fields = ('tsk', 'skill')
 
 class TaskAssigneeSerializer(serializers.ModelSerializer):
 	class Meta:
