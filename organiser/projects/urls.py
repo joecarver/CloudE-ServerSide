@@ -19,9 +19,3 @@ urlpatterns = [
     url(r'^columns/$', views.ColumnView.as_view()),
     url(r'^columns/(?P<pk>[0-9]+)/$', views.ColumnDetailView.as_view()),
 ]
-
-urlpatterns += [
-    # url(r'^test/$', views.TestObjectList.as_view()),
-    url(r'^login/', include('rest_framework.urls',
-                               namespace='rest_framework')),
-]

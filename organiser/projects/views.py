@@ -9,6 +9,17 @@ from django.contrib.auth import hashers
 from rest_framework import permissions
 
 
+def rehash(self, request):
+    """
+    Rehashes the password in ta given request
+    @return RequestDict - With hashed password field
+    """
+    raw_password = request.DATA.__getitem__('password')
+    hashed_password = hashers   .make_password(raw_password,"JlZLpAE9lxs1")
+    request.DATA.__setitem__('password', hashed_password)
+    return request
+
+
 class AppUserList(generics.ListCreateAPIView):
     """
     Lists all the users in the system.
@@ -17,23 +28,20 @@ class AppUserList(generics.ListCreateAPIView):
     queryset = AppUser.objects.all()
     serializer_class = AppUserSerializer
 
-
     def post(self, request, *args, **kwargs):
         """ @Override
         Overriden in order to hash the password before saving it.
         """
-        raw_password = request.DATA.__getitem__('password')
-
-        hashed_password = hashers   .make_password(raw_password,"JlZLpAE9lxs1");
-        request.DATA.__setitem__('password', hashed_password)
-
+        request = rehash(request);
         return super(AppUserList,self).post(request, *args, **kwargs)
 
+#Find an app user by id
 class AppUsers(generics.RetrieveUpdateDestroyAPIView):
     queryset = AppUser.objects.all()
     serializer_class = AppUserSerializer
     permission_classes = (permissions.IsAuthenticated,)
 
+#Find an app user by username
 class AppUserByName(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = AppUserSerializer
     lookup_field = 'username'
