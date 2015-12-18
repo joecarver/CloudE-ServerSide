@@ -55,7 +55,7 @@ class ProjectAssignees(generics.ListCreateAPIView):
 		return ProjectAssignee.objects.filter(proj=projID)
 
 #view all tasks and create a new one
-class TaskList(generics.ListCreateAPIView):
+class TaskList(generics.RetrieveUpdateDestroyAPIView	):
 	queryset = Task.objects.all()
 	serializer_class = TaskSerializer
 
@@ -65,7 +65,7 @@ class TaskDetail(generics.RetrieveUpdateDestroyAPIView):
 	serializer_class = TaskSerializer
 
 #view assignees for any given task, create a new one
-class TaskAssignees(generics.ListCreateAPIView):
+class TaskAssignees(generics.RetrieveUpdateDestroyAPIView):
 	serializer_class = TaskAssigneeSerializer
 	def get_queryset(self):
 		taskID = self.kwargs['pk']
