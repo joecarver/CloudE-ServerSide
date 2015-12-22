@@ -4,21 +4,6 @@ from projects.models import *
 #This is the permissions bit
 from django.contrib.auth.models import User
 
-class TestObjectSerializer(serializers.ModelSerializer):
-	""" Lists all the auth.Users and their TestObejcts"""
-	testObjs = serializers.PrimaryKeyRelatedField(many=True, queryset=TestObject.objects.all())
-	owner = serializers.SerializerMethodField('test_method')
-
-	class Meta:
-		model = User
-		fields = ('id', 'text', 'owner',)
-
-	def perform_create(self, serializer):
-		serializer.save(owner=self.request.user)
-
-	def test_method(self, testobj):
-		return testobj.owner.username
-
 class AppUserSerializer(serializers.ModelSerializer):
 	projects = serializers.SerializerMethodField('dank')
 	def dank(self, appuser):
@@ -29,7 +14,7 @@ class AppUserSerializer(serializers.ModelSerializer):
  		return resultIds
  	class Meta:
  		model = AppUser
- 		fields = ('id', 'date', 'username','avatar','projects')
+ 		fields = ('id', 'date', 'username','password','email','avatar','projects')
 
 class ProjectSerializer(serializers.ModelSerializer):
 	details = serializers.SerializerMethodField('dank')
@@ -107,21 +92,10 @@ class TaskSerializer(serializers.ModelSerializer):
 		model = Task
 		fields = ('id', 'date', 'summary', 'description', 'proj', 'column', 'posInColumn', 'dueDate')
 
-
-# class TaskRequiredSkillSerializer(serializers.ModelSerializer):
-# 	class Meta:
-# 		model = TaskRequiredSkill
-# 		fields = ('tsk', 'skill')
-
 class TaskAssigneeSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = TaskAssignee
 		fields = ('tsk', 'assignee')
-
-class NotificationSerializer(serializers.ModelSerializer):
-	class Meta:
-		model = Notification
-		fields = ('date', 'sender', 'receiver', 'task', 'project')
 
 class ColumnSerializer(serializers.ModelSerializer):
 	class Meta:

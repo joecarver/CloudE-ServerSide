@@ -1,19 +1,10 @@
 from django.db import models
 from django.db.models.signals import post_save
 
-class TestObject(models.Model):
-    """
-    This is a test obejct that I intend to use in order to then apply it to AppUser
-    """
-    text = models.TextField(default='This is Stefan!')
-    owner = models.ForeignKey('auth.User', related_name='testObj')
+#This is the permissions bit
+from django.contrib.auth.models import User
 
-    def __unicode__(self):
-        return "Test Obj: <"+text+ "> owned by: "+owner
-
-
-class AppUser(models.Model):
-    username = models.CharField(blank=False, max_length=254, unique=True)
+class AppUser(User):
     avatar = models.CharField(default='JamesCameron', max_length=254)
     date = models.DateTimeField(auto_now_add=True)
 
@@ -80,20 +71,3 @@ class TaskAssignee(models.Model):
 
 	def __unicode__(self):
 		return self.tsk.summary + " - in project - " + self.tsk.proj.title + " - assigned to: " + self.assignee.username
-
-# class TaskRequiredSkill(models.Model):
-# 	tsk = models.ForeignKey(Task)
-# 	skill = models.TextField(blank=False)
-
-# 	class Meta:
-# 		unique_together = ['tsk', 'skill']
-
-# 	def __unicode__(self):
-# 		return self.skill + ' needed by ' + self.tsk.summary
-
-class Notification(models.Model):
-	date = models.DateTimeField(auto_now_add=True)
-	sender = models.ForeignKey(AppUser, related_name='%(class)s_sender')
-	receiver = models.ForeignKey(AppUser, related_name='%(class)s_receiver', blank=False)
-	task = models.ForeignKey(Task)
-	project = models.ForeignKey(Project)
