@@ -65,7 +65,7 @@ class TaskDetail(generics.RetrieveUpdateDestroyAPIView):
 	serializer_class = TaskSerializer
 
 #view assignees for any given task, create a new one
-class TaskAssignees(generics.RetrieveUpdateDestroyAPIView):
+class TaskAssignees(generics.ListCreateAPIView):
 	serializer_class = TaskAssigneeSerializer
 	def get_queryset(self):
 		taskID = self.kwargs['pk']
