@@ -1,7 +1,7 @@
 from rest_framework import generics
 import itertools
-from projects.models import AppUser, Project, ProjectAssignee, Task, TaskAssignee, Notification, Column
-from projects.serializers import AppUserSerializer, TaskSerializer, TaskAssigneeSerializer, NotificationSerializer, ColumnSerializer, ProjectSerializer, ProjectAssigneeSerializer
+from projects.models import AppUser, Project, ProjectAssignee, Task, TaskAssignee, Column
+from projects.serializers import AppUserSerializer, TaskSerializer, TaskAssigneeSerializer, ColumnSerializer, ProjectSerializer, ProjectAssigneeSerializer
 
 #Used to hash the raw password that is used in #/appusers
 from django.contrib.auth import hashers
@@ -107,19 +107,6 @@ class TaskAssignees(generics.ListCreateAPIView):
     def get_queryset(self):
         taskID = self.kwargs['pk']
         return TaskAssignee.objects.filter(tsk=taskID)
-
-
-# class TaskSkills(generics.RetrieveUpdateDestroyAPIView):
-# 	queryset = TaskRequiredSkill.objects.all()
-# 	serializer_class = TaskRequiredSkillSerializer
-
-class NotificationView(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = NotificationSerializer
-    permission_classes = (permissions.IsAuthenticated,)
-
-    def get_queryset(self):
-        receiverID = self.kwargs['pk']
-        return Notification.objects.filter(receiver=receiverID)
 
 class ColumnView(generics.ListCreateAPIView):
     queryset = Column.objects.all()

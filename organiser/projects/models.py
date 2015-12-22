@@ -71,20 +71,3 @@ class TaskAssignee(models.Model):
 
 	def __unicode__(self):
 		return self.tsk.summary + " - in project - " + self.tsk.proj.title + " - assigned to: " + self.assignee.username
-
-# class TaskRequiredSkill(models.Model):
-# 	tsk = models.ForeignKey(Task)
-# 	skill = models.TextField(blank=False)
-
-# 	class Meta:
-# 		unique_together = ['tsk', 'skill']
-
-# 	def __unicode__(self):
-# 		return self.skill + ' needed by ' + self.tsk.summary
-
-class Notification(models.Model):
-	date = models.DateTimeField(auto_now_add=True)
-	sender = models.ForeignKey(AppUser, related_name='%(class)s_sender')
-	receiver = models.ForeignKey(AppUser, related_name='%(class)s_receiver', blank=False)
-	task = models.ForeignKey(Task)
-	project = models.ForeignKey(Project)

@@ -92,21 +92,10 @@ class TaskSerializer(serializers.ModelSerializer):
 		model = Task
 		fields = ('id', 'date', 'summary', 'description', 'proj', 'column', 'posInColumn', 'dueDate')
 
-
-# class TaskRequiredSkillSerializer(serializers.ModelSerializer):
-# 	class Meta:
-# 		model = TaskRequiredSkill
-# 		fields = ('tsk', 'skill')
-
 class TaskAssigneeSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = TaskAssignee
 		fields = ('tsk', 'assignee')
-
-class NotificationSerializer(serializers.ModelSerializer):
-	class Meta:
-		model = Notification
-		fields = ('date', 'sender', 'receiver', 'task', 'project')
 
 class ColumnSerializer(serializers.ModelSerializer):
 	class Meta:
