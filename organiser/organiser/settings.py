@@ -25,7 +25,7 @@ SECRET_KEY = '4+3*f-ja90^a^59jxo=t(-qq2*dksyugvpz&pz#u0qz$11n0l!'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['https://comp3207-server.appspot.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
