@@ -1,9 +1,9 @@
 # webapp/app.yaml
-application: cloude-restfulservice
+application: 'comp3207-server'
 version: 1
 runtime: python27
 api_version: 1
-threadsafe: true
+threadsafe: yes
 
 handlers:
 - url: .*
