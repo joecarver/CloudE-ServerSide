@@ -1,7 +1,7 @@
 from rest_framework import generics
 import itertools
 from projects.models import AppUser, Project, ProjectAssignee, Task, TaskAssignee, Column
-from projects.serializers import AppUserSerializer, TaskSerializer, TaskAssigneeSerializer, ColumnSerializer, ProjectSerializer, ProjectAssigneeSerializer
+from projects.serializers import AppUserSerializer, TaskSerializer, ProjectsByUserSerializer, TaskAssigneeSerializer, ColumnSerializer, ProjectSerializer, ProjectAssigneeSerializer
 
 #Used to hash the raw password that is used in #/appusers
 from django.contrib.auth import hashers
@@ -70,6 +70,12 @@ class AppUserByName(generics.RetrieveUpdateDestroyAPIView):
 class ProjectList(generics.ListCreateAPIView):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+
+# Display projects for a user
+class ProjectsByUsername(generics.RetrieveUpdateDestroyAPIView):
+    queryset = AppUser.objects.all()
+    serializer_class = ProjectsByUserSerializer
     permission_classes = (permissions.IsAuthenticated,)
 
 #update detail

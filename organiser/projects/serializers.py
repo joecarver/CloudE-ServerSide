@@ -16,6 +16,87 @@ class AppUserSerializer(serializers.ModelSerializer):
  		model = AppUser
  		fields = ('id', 'date', 'username','password','email','avatar','projects')
 
+class ProjectsByUserSerializer(serializers.ModelSerializer):
+	projects = serializers.SerializerMethodField('dank')
+	def dank(self, appuser):
+		results = ProjectAssignee.objects.filter(assignee=appuser.id)
+		project_objects = []
+		for result in results:
+			project = {}
+
+			projectDetails = {}
+
+			assignees = []
+			columns = []
+			tasks = []
+
+			project["id"] = result.proj.id
+			project["title"] = result.proj.title
+
+			projAssResults = ProjectAssignee.objects.filter(proj=result.proj.id)
+			projColResults = Column.objects.filter(proj=result.proj.id)
+
+			for projAss in projAssResults:
+				tempResults = AppUser.objects.filter(id=projAss.assignee.id)
+				for result in tempResults:
+					tempUser = {}
+					tempUser["id"] = result.id
+					tempUser["date"] = projAss.date # this sets the date to when the user was assigned the project
+					tempUser["username"] = result.username
+					tempUser["avatar"] = result.avatar
+					assignees.append(tempUser)
+
+			for projCol in projColResults:
+				tempCol = {}
+				tempCol["id"] = projCol.id
+				tempCol["date"] = projCol.date
+				tempCol["name"] = projCol.name
+				tempCol["proj"] = projCol.proj.id
+				columns.append(tempCol)
+
+				tempTasks =  Task.objects.filter(proj=projCol.proj, column=projCol.id)
+				for task in tempTasks:
+					tempTask = {}
+					tempTask["id"] = task.id
+					tempTask["date"] = task.date
+					tempTask["summary"] = task.summary
+					tempTask["description"] = task.description
+					tempTask["proj"] = task.proj.id
+					tempTask["column"] = task.column.id
+					tempTask["posInColumn"] = task.posInColumn
+					tempTask["dueDate"] = task.dueDate
+
+					taskAssignees = []
+					tempTaskAsses = TaskAssignee.objects.filter(tsk=task.id)
+					# maybe a check here like taskAsses <= projAsses
+					for taskAss in tempTaskAsses:
+						tempTaskAss = {}
+						tempTaskAss["id"] = taskAss.assignee.id
+						tempTaskAss["date"] = taskAss.date
+						tempTaskAss["task"] = taskAss.tsk.id
+						tempTaskAss["username"] = taskAss.assignee.username
+						tempTaskAss["avatar"] = taskAss.assignee.avatar
+						taskAssignees.append(tempTaskAss)
+
+					tempTask["assignees"] = taskAssignees
+					tasks.append(tempTask)
+
+			# project["id"] = result.proj.id
+			# project["title"] = result.proj.title
+			project["admin"] = appuser.id
+
+			projectDetails["assignees"] = assignees
+			projectDetails["columns"] = columns
+			projectDetails["tasks"] = tasks
+
+			project["details"] = projectDetails
+
+			project_objects.append(project);
+ 		return project_objects
+ 	class Meta:
+ 		model = AppUser
+ 		fields = ('id', 'username', 'projects')
+
 class ProjectSerializer(serializers.ModelSerializer):
 	details = serializers.SerializerMethodField('dank')
 	def dank(self, project):
